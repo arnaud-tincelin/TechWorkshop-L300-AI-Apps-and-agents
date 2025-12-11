@@ -9,7 +9,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      REGISTRY: go4phnusgstomcosureg
+      REGISTRY: go4phnusgstomcosureg.azurecr.io
       REPOSITORY: chat-app
       USERNAME: go4phnusgstomcosureg
       PASSWORD: ${{ secrets.ACR_PASSWORD }}
