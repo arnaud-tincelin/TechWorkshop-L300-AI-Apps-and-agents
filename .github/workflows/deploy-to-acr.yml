@@ -1,0 +1,39 @@
+name: Build and Deploy to Azure Container Registry
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: ${{ secrets.ACR_REGISTRY }}
+      REPOSITORY: ${{ secrets.ACR_REPOSITORY }}
+      USERNAME: ${{ secrets.ACR_USERNAME }}
+      PASSWORD: ${{ secrets.ACR_PASSWORD }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: src/
+          sparse-checkout-cone-mode: false
+
+      - name: Generate .env file from secret (do not check in)
+        run: echo "${{ secrets.ENV }}" > src/.env
+
+      - name: Build Docker image
+        run: |
+          cd src
+          docker build -t $REGISTRY/$REPOSITORY:latest .
+
+      - name: Login to Azure Container Registry
+        run: echo $PASSWORD | docker login $REGISTRY -u $USERNAME --password-stdin
+
+      - name: Push Docker image
+        run: docker push $REGISTRY/$REPOSITORY:latest
+
+      # Cleanup the .env file (optional but recommended for security)
+      - name: Remove .env file
+        run: rm src/.env
