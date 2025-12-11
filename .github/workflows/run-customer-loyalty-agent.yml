@@ -2,10 +2,14 @@ name: Execute Customer Loyalty Agent
 
 on:
   push:
+    # Paths include the initializer, prompt, workflow, and any associated tools
     paths:
-      - src/app/agents/customerLoyaltyAgent_initializer.py
-      - src/app/tools/discountLogic.py
-      - src/prompts/CustomerLoyaltyAgentPrompt.txt
+      - 'src/app/agents/customerLoyaltyAgent_initializer.py'
+      - 'src/app/tools/discountLogic.py'
+      - 'src/prompts/CustomerLoyaltyAgentPrompt.txt'
+      - '.github/workflows/deploy-customer-loyalty-agent.yml'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   run-customer-loyalty-agent:
