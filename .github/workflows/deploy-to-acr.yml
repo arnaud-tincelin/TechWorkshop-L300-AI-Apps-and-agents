@@ -9,9 +9,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      REGISTRY: ${{ secrets.ACR_REGISTRY }}
-      REPOSITORY: ${{ secrets.ACR_REPOSITORY }}
-      USERNAME: ${{ secrets.ACR_USERNAME }}
+      REGISTRY: go4phnusgstomcosureg
+      REPOSITORY: chat-app
+      USERNAME: go4phnusgstomcosureg
       PASSWORD: ${{ secrets.ACR_PASSWORD }}
     steps:
       - name: Checkout source
